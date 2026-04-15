@@ -1,0 +1,52 @@
+<li id="<%= dom_id(todo) %>"
+    class="bg-white rounded-xl shadow-sm border border-gray-200 px-5 py-4 flex items-start gap-4 <%= 'opacity-60' if todo.done %>">
+
+  <%# 完了トグルボタン %>
+  <%= button_to toggle_todo_path(todo), method: :patch,
+        data: { turbo_stream: true },
+        class: "mt-0.5 flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition
+                #{todo.done ? 'bg-indigo-500 border-indigo-500 text-white' : 'border-gray-300 hover:border-indigo-400'}" do %>
+    <% if todo.done %>
+      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+      </svg>
+    <% end %>
+  <% end %>
+
+  <%# 本文 %>
+  <div class="flex-1 min-w-0">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="font-medium text-gray-800 <%= 'line-through text-gray-400' if todo.done %>">
+        <%= todo.title %>
+      </span>
+
+      <%# 優先度バッジ %>
+      <% priority_styles = { "low" => "bg-gray-100 text-gray-500", "medium" => "bg-yellow-100 text-yellow-700", "high" => "bg-red-100 text-red-700" } %>
+      <% priority_labels = { "low" => "低", "medium" => "中", "high" => "高" } %>
+      <span class="text-xs px-2 py-0.5 rounded-full font-medium <%= priority_styles[todo.priority] %>">
+        <%= priority_labels[todo.priority] %>
+      </span>
+
+      <%# 期限 %>
+      <% if todo.due_date.present? %>
+        <% overdue = !todo.done && todo.due_date < Date.today %>
+        <span class="text-xs <%= overdue ? 'text-red-500 font-semibold' : 'text-gray-400' %>">
+          <%= l(todo.due_date, format: :short) rescue todo.due_date.strftime("%m/%d") %>
+        </span>
+      <% end %>
+    </div>
+
+    <% if todo.description.present? %>
+      <p class="text-sm text-gray-500 mt-1 truncate"><%= todo.description %></p>
+    <% end %>
+  </div>
+
+  <%# 操作ボタン %>
+  <div class="flex items-center gap-2 flex-shrink-0">
+    <%= link_to "編集", edit_todo_path(todo),
+          class: "text-xs text-gray-400 hover:text-indigo-600 transition" %>
+    <%= button_to "削除", todo_path(todo), method: :delete,
+          data: { turbo_confirm: "削除しますか？" },
+          class: "text-xs text-gray-400 hover:text-red-500 transition" %>
+  </div>
+</li>

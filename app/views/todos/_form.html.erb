@@ -1,0 +1,46 @@
+<%= form_with model: todo, class: "space-y-5" do |f| %>
+  <% if todo.errors.any? %>
+    <div class="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+      <ul class="list-disc list-inside space-y-1">
+        <% todo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, "タイトル", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_field :title, class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent",
+          placeholder: "Todo のタイトルを入力" %>
+  </div>
+
+  <div>
+    <%= f.label :description, "詳細", class: "block text-sm font-medium text-gray-700 mb-1" %>
+    <%= f.text_area :description, rows: 3,
+          class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent resize-none",
+          placeholder: "詳細（任意）" %>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <%= f.label :priority, "優先度", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.select :priority,
+            [["低", "low"], ["中", "medium"], ["高", "high"]],
+            {},
+            class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent bg-white" %>
+    </div>
+
+    <div>
+      <%= f.label :due_date, "期限日", class: "block text-sm font-medium text-gray-700 mb-1" %>
+      <%= f.date_field :due_date,
+            class: "w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-transparent" %>
+    </div>
+  </div>
+
+  <div class="flex gap-3 pt-2">
+    <%= f.submit todo.new_record? ? "作成する" : "更新する",
+          class: "bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-5 py-2 rounded-lg cursor-pointer transition" %>
+    <%= link_to "キャンセル", todos_path, class: "text-sm text-gray-500 hover:text-gray-700 px-4 py-2" %>
+  </div>
+<% end %>

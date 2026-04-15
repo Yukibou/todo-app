@@ -1,0 +1,22 @@
+<%= content_for :title, "Todo 一覧" %>
+
+<div class="max-w-3xl mx-auto">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Todo 一覧</h1>
+    <%= link_to "＋ 新規作成", new_todo_path,
+          class: "bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition" %>
+  </div>
+
+  <% if @todos.empty? %>
+    <div class="text-center py-16 text-gray-400">
+      <p class="text-lg">まだ Todo がありません。</p>
+      <p class="text-sm mt-1">「新規作成」から追加してみましょう。</p>
+    </div>
+  <% else %>
+    <ul id="todos" class="space-y-3">
+      <% @todos.each do |todo| %>
+        <%= render "todo", todo: todo %>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
