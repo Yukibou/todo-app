@@ -18,7 +18,7 @@ Rails 8.1 製の Todo 管理アプリ。Devise による認証付き。ユーザ
 | モデル | 概要 |
 |--------|------|
 | `User` | Devise で管理。メール・パスワード認証 |
-| `Todo` | `title`, `description`, `priority`, `due_date`, `done`, `user_id` |
+| `Todo` | `title`, `description`, `priority`, `due_date`, `done`, `assignee`, `user_id` |
 
 - `Todo` は `User` に belongs_to（外部キー制約あり）
 - `current_user.todos` でスコープを絞る設計
