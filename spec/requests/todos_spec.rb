@@ -37,7 +37,8 @@ RSpec.describe 'Todos', type: :request do
           {
             todo: {
               title: 'Test Todo',
-              description: 'Test Description'
+              description: 'Test Description',
+              assignee: 'Test User'
             }
           }
         end

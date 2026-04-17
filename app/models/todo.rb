@@ -4,6 +4,7 @@ class Todo < ApplicationRecord
   enum :priority, { low: 0, medium: 1, high: 2 }
 
   validates :title, presence: true
+  validates :assignee, presence: true
 
   scope :ordered, -> { order(created_at: :desc) }
 end

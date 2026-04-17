@@ -7,6 +7,12 @@ RSpec.describe Todo, type: :model do
       expect(todo).not_to be_valid
       expect(todo.errors[:title]).to be_present
     end
+
+    it 'assignee が空の場合バリデーションエラーになること' do
+      todo = build(:todo, assignee: '')
+      expect(todo).not_to be_valid
+      expect(todo.errors[:assignee]).to be_present
+    end
   end
 
   describe 'associations' do
